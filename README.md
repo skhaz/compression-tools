@@ -1,5 +1,5 @@
 # About
-This docker contains a set of tools for compressing and optimize images in many formats with high results, it also includes [https://www.gnu.org/software/parallel/](GNU Parallel).
+This docker contains a set of tools for compressing and optimize images in many formats with high results, it also includes [GNU parallel](https://www.gnu.org/software/parallel/).
 
 ## Tools included until now
 * [Efficient Compression Tool](https://github.com/fhanau/Efficient-Compression-Tool)- Efficient Compression Tool (or ECT) is a C++ file optimizer. It supports PNG, JPEG, GZIP and ZIP files.
