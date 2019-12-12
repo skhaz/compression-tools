@@ -1,7 +1,7 @@
 FROM debian:buster-slim as builder
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y autoconf cmake build-essential git parallel nasm wget
+RUN apt-get install -y autoconf build-essential cmake pkg-config nasm wget
 
 ARG LEANIFY_HASH=47a76d12a6c830467b68ad62c915d60692b44354
 WORKDIR /root/leanify
@@ -21,6 +21,7 @@ RUN autoreconf --install && ./configure && make -j$(nproc)
 FROM debian:buster-slim
 RUN apt-get update
 RUN apt-get upgrade -y
+RUN apt-get install -y ffmpeg imagemagick parallel
 
 COPY --from=builder /root/ect/ect /usr/local/bin
 COPY --from=builder /root/leanify/leanify /usr/local/bin
