@@ -21,8 +21,9 @@ RUN autoreconf --install && ./configure && make -j$(nproc)
 FROM debian:buster-slim
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y ffmpeg imagemagick parallel
+RUN apt-get install -y ffmpeg imagemagick parallel libjemalloc2
 
+ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libjemalloc.so.2
 COPY --from=builder /root/ect/ect /usr/local/bin
 COPY --from=builder /root/leanify/leanify /usr/local/bin
 COPY --from=builder /root/gifsicle/src/gifsicle /usr/local/bin
