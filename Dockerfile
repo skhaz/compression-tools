@@ -1,7 +1,5 @@
 FROM debian:buster-slim as builder
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y autoconf build-essential cmake pkg-config nasm wget
+RUN apt-get update && apt-get install -y autoconf build-essential cmake pkg-config nasm wget
 
 ARG LEANIFY_HASH=47a76d12a6c830467b68ad62c915d60692b44354
 WORKDIR /root/leanify
@@ -19,9 +17,7 @@ RUN wget -qO- github.com/kohler/gifsicle/archive/v1.92.tar.gz | tar zx --strip-c
 RUN autoreconf --install && ./configure && make -j$(nproc)
 
 FROM debian:buster-slim
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y ffmpeg imagemagick parallel libjemalloc2
+RUN apt-get update && apt-get install -y ffmpeg imagemagick parallel libjemalloc2
 
 ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libjemalloc.so.2
 COPY --from=builder /root/ect/ect /usr/local/bin
