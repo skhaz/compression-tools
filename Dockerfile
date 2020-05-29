@@ -1,4 +1,4 @@
-FROM debian:buster-slim as builder
+FROM debian:buster-slim AS builder
 RUN apt-get update && apt-get install -y autoconf build-essential cmake pkg-config nasm wget
 
 ARG LEANIFY_HASH=47a76d12a6c830467b68ad62c915d60692b44354
