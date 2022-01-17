@@ -12,7 +12,7 @@ RUN wget -qO- github.com/fhanau/Efficient-Compression-Tool/archive/"$ECT_HASH".t
 RUN wget -qO- github.com/glennrp/libpng/archive/v1.6.35.tar.gz | tar zx --strip-components=1 -C src/libpng
 RUN cd src && make -j$(nproc)
 
-ARG GIFSICLE_HASH=ba9c79d64aeb5a2cce85695760619a3c3ab64d48
+ARG GIFSICLE_HASH=e13d08de9ced1c1ab9371454e3e97f47be2674e5
 WORKDIR /root/gifsicle
 RUN wget -qO- github.com/kohler/gifsicle/archive/"$GIFSICLE_HASH".tar.gz | tar zx --strip-components=1
 RUN autoreconf --install && ./configure && make -j$(nproc)
