@@ -1,7 +1,7 @@
 FROM debian:buster AS builder
 RUN apt-get update && apt-get install -y autoconf build-essential cmake pkg-config nasm wget
 
-ARG LEANIFY_HASH=d3e2cfc571c71c17a0797a78d32800cc757c68da
+ARG LEANIFY_HASH=b5f2efccde6f57c4dfecc2006e75444621763fd4
 WORKDIR /root/leanify
 RUN wget -qO- github.com/JayXon/Leanify/archive/"$LEANIFY_HASH".tar.gz | tar zx --strip-components=1
 RUN make -j$(nproc)
