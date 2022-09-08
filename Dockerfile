@@ -19,11 +19,11 @@ RUN wget -qO- github.com/kohler/gifsicle/archive/"$GIFSICLE_HASH".tar.gz | tar z
 RUN autoreconf --install && ./configure && make -j$(nproc)
 
 FROM debian:bullseye-slim
-RUN apt-get update && apt-get install -y ffmpeg imagemagick parallel libjemalloc2
+RUN apt-get update && apt-get install -y bash ffmpeg imagemagick parallel libjemalloc2
 
 ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libjemalloc.so.2
 COPY --from=builder /opt/leanify/leanify /usr/local/bin
-COPY --from=builder /opt/ect/ect /usr/local/bin
+COPY --from=builder /opt/ect/src/ect /usr/local/bin
 COPY --from=builder /opt/gifsicle/src/gifsicle /usr/local/bin
 
 WORKDIR /data
