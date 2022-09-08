@@ -10,8 +10,8 @@ TAG := skhaz/compression-tools:latest
 build:
 	docker build -t $(TAG) .
 
-run:
+run: build
 	docker run -it $(TAG)
 
-push:
+push: build
 	docker push $(TAG)
