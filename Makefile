@@ -8,7 +8,7 @@ export DOCKER_BUILDKIT = 0
 TAG := skhaz/compression-tools:latest
 
 build:
-	docker build --tag $(TAG) .
+	docker build -t $(TAG) .
 
 run:
 	docker run -it $(TAG)
