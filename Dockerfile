@@ -1,4 +1,4 @@
-FROM debian:bullseye AS builder
+FROM debian:bookworm AS builder
 RUN apt-get update && apt-get install -y autoconf build-essential cmake pkg-config nasm wget
 
 ARG LEANIFY_HASH=66d25e47613062117d8abbfef9e77fcab2abd57d
@@ -18,12 +18,10 @@ WORKDIR /opt/gifsicle
 RUN wget -qO- github.com/kohler/gifsicle/archive/"$GIFSICLE_HASH".tar.gz | tar zx --strip-components=1
 RUN autoreconf --install && ./configure && make -j$(nproc)
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
+WORKDIR /data
 RUN apt-get update && apt-get install -y bash ffmpeg imagemagick parallel libjemalloc2
-
 ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libjemalloc.so.2
 COPY --from=builder /opt/leanify/leanify /usr/local/bin
 COPY --from=builder /opt/ect/src/ect /usr/local/bin
 COPY --from=builder /opt/gifsicle/src/gifsicle /usr/local/bin
-
-WORKDIR /data
