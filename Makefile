@@ -3,15 +3,13 @@
 
 .SILENT:
 
-export DOCKER_BUILDKIT = 0
-
 TAG := skhaz/compression-tools:latest
 
 build:
-	docker build -t $(TAG) .
+	docker buildx build --platform linux/amd64 --tag $(TAG) .
 
 run: build
-	docker run -it $(TAG)
+	docker run --interactive --tty $(TAG)
 
 push: build
 	docker push $(TAG)
