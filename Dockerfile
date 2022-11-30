@@ -1,16 +1,16 @@
 FROM debian:bookworm AS builder
 RUN apt-get update && apt-get install -y autoconf build-essential cmake pkg-config nasm wget
 
-ARG LEANIFY_HASH=66d25e47613062117d8abbfef9e77fcab2abd57d
+ARG LEANIFY_HASH=f19cb606a01f631b39d18ec7e331df6d2a4b349c
 WORKDIR /opt/leanify
 RUN wget -qO- github.com/JayXon/Leanify/archive/"$LEANIFY_HASH".tar.gz | tar zx --strip-components=1
 RUN make -j$(nproc)
 
-ARG ECT_HASH=28f0d8fc33bbfb15a6c10070b1ecbad992afb11e
+ARG ECT_HASH=8b2511e2ceecd633af00646ec9fe16c90528cee9
 WORKDIR /opt/ect
 RUN wget -qO- github.com/fhanau/Efficient-Compression-Tool/archive/"$ECT_HASH".tar.gz | tar zx --strip-components=1
-RUN wget -qO- github.com/glennrp/libpng/archive/a40189cf881e9f0db80511c382292a5604c3c3d1.tar.gz | tar zx --strip-components=1 -C src/libpng
-RUN wget -qO- github.com/mozilla/mozjpeg/archive/06ee0dd3c2e6fb53c9a19f16a47d292f9e889d5c.tar.gz | tar zx --strip-components=1 -C src/mozjpeg
+RUN wget -qO- github.com/glennrp/libpng/archive/07b8803110da160b158ebfef872627da6c85cbdf.tar.gz | tar zx --strip-components=1 -C src/libpng
+RUN wget -qO- github.com/mozilla/mozjpeg/archive/cf6facaedb8f8ded44e6c41b0db8a721d329ff22.tar.gz | tar zx --strip-components=1 -C src/mozjpeg
 RUN cd src && cmake . && make -j$(nproc)
 
 ARG GIFSICLE_HASH=bdac32963dca1b5b5134407a2034c900d576ae66
