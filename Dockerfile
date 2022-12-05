@@ -2,9 +2,6 @@ FROM debian:bookworm AS builder
 RUN apt-get update
 RUN apt-get install -y autoconf build-essential cmake pkg-config nasm wget
 
-ENV CFLAGS="-O2 -march=native -mtune=native -pipe -flto"
-ENV CXXFLAGS="${CFLAGS}"
-
 ARG LEANIFY_HASH=7847668ac5bf0df1d940b674bc8b907bd1b37044
 WORKDIR /opt/leanify
 RUN wget -qO- github.com/JayXon/Leanify/archive/"$LEANIFY_HASH".tar.gz | tar zx --strip-components=1
