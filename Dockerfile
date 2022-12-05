@@ -1,7 +1,11 @@
 FROM debian:bookworm AS builder
-RUN apt-get update && apt-get install -y autoconf build-essential cmake pkg-config nasm wget
+RUN apt-get update
+RUN apt-get install -y autoconf build-essential cmake pkg-config nasm wget
 
-ARG LEANIFY_HASH=f19cb606a01f631b39d18ec7e331df6d2a4b349c
+ENV CFLAGS="-O2 -march=native -mtune=native -pipe -flto"
+ENV CXXFLAGS="${CFLAGS}"
+
+ARG LEANIFY_HASH=7847668ac5bf0df1d940b674bc8b907bd1b37044
 WORKDIR /opt/leanify
 RUN wget -qO- github.com/JayXon/Leanify/archive/"$LEANIFY_HASH".tar.gz | tar zx --strip-components=1
 RUN make -j$(nproc)
@@ -20,7 +24,9 @@ RUN autoreconf --install && ./configure && make -j$(nproc)
 
 FROM debian:bookworm-slim
 WORKDIR /data
-RUN apt-get update && apt-get install -y bash ffmpeg imagemagick parallel libjemalloc2
+RUN apt-get update
+RUN apt-get install -y bash ffmpeg imagemagick parallel libjemalloc2
+
 ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libjemalloc.so.2
 COPY --from=builder /opt/leanify/leanify /usr/local/bin
 COPY --from=builder /opt/ect/src/ect /usr/local/bin
